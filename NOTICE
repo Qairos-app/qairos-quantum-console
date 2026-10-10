@@ -1,0 +1,6 @@
+Qairos standalone distribution.
+Qairos-authored source is distributed under LICENSE, subject to retained per-file notices.
+Upstream dependencies retain their own licenses; package lockfiles identify exact versions.
+Ethereum ABIs and deployment addresses are public interface metadata, not private credentials.
+The quantum console contains bundled @noble/hashes and @noble/post-quantum code by Paul Miller under the MIT License. Original notices are preserved; see third-party/MIT-noble.txt where applicable.
+Qairos brand assets are supplied for this project; the code license does not grant trademark endorsement rights.

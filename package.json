@@ -1,0 +1,46 @@
+{
+  "name": "@qairos-app/quantum-console",
+  "version": "0.1.0",
+  "description": "Wallet-connected quantum early-warning console for Ethereum.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": {
+    "name": "Qairos",
+    "email": "support@qairos.tech"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Qairos-app/qairos-quantum-console.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Qairos-app/qairos-quantum-console/issues"
+  },
+  "homepage": "https://github.com/Qairos-app/qairos-quantum-console#readme",
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@10.26.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test test/*.test.mjs",
+    "validate": "pnpm test && pnpm build",
+    "release:package": "pnpm build && node scripts/package-release.mjs"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "third-party",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "SECURITY.md",
+    "CHANGELOG.md"
+  ],
+  "devDependencies": {
+    "ethers": "6.17.0",
+    "vite": "7.3.6"
+  }
+}

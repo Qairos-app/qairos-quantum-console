@@ -1,0 +1,43 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.26.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm run validate
+      - run: pnpm audit --prod --audit-level=high
+      - name: Require matching version
+        run: test "${GITHUB_REF_NAME}" = "v$(node -p 'JSON.parse(require("fs").readFileSync("package.json")).version')"
+      - run: pnpm run release:package
+      - name: Attach reviewed package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            for asset in release-assets/*; do
+              name=$(basename "$asset")
+              if ! gh release view "$GITHUB_REF_NAME" --json assets --jq '.assets[].name' | grep -Fxq "$name"; then
+                gh release upload "$GITHUB_REF_NAME" "$asset"
+              fi
+            done
+          else
+            gh release create "$GITHUB_REF_NAME" release-assets/* --verify-tag --title "Qairos Quantum Console $GITHUB_REF_NAME" --notes-file CHANGELOG.md
+          fi

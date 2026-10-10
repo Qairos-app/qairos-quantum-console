@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="brand/favicon.ico" sizes="any">
+<link rel="icon" href="brand/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<meta name="description" content="Quantum early warning for Ethereum L1. Explore Mainnet canary monitoring, ML-DSA-44 post-quantum keys and guarded contract tools with Qairos.">
+<meta name="application-name" content="Qairos">
+<meta name="author" content="Qairos">
+<meta name="theme-color" content="#060606">
+<link rel="canonical" href="__QAIROS_SITE_ORIGIN__/">
+<meta property="og:site_name" content="Qairos">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Qairos | Quantum Early Warning for Ethereum">
+<meta property="og:description" content="Mainnet canary monitoring and ML-DSA-44 post-quantum key tools for Ethereum L1.">
+<meta property="og:url" content="__QAIROS_SITE_ORIGIN__/">
+<meta property="og:image" content="__QAIROS_SITE_ORIGIN__/brand/qairos-social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Qairos logo — quantum early warning and post-quantum tools for Ethereum L1">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Qairos | Quantum Early Warning for Ethereum">
+<meta name="twitter:description" content="Explore Mainnet canary monitoring and ML-DSA-44 post-quantum tools for Ethereum L1.">
+<meta name="twitter:image" content="__QAIROS_SITE_ORIGIN__/brand/qairos-social.png">
+<meta name="twitter:image:alt" content="Qairos quantum early-warning logo">
+<style>:root{color-scheme:dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Qairos | Quantum Early Warning for Ethereum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+</head>
+<body>
+<style>
+/* Layout: one technical-service-document frame ruled by 1px hairlines. System bar, doc header, hero (spec | instrument | views), manifesto, banner, operator console (6 working tools), contracts, footer. */
+:root{
+  --bg:#060606;
+  --cell:#0b0b0a;
+  --ink:#ecebe4;
+  --dim:#8f8e86;
+  --faint:#45443f;
+  --line:rgba(236,235,228,.62);
+  --hair:rgba(236,235,228,.16);
+  --acc:#c6ff3a;
+  --acc-dim:rgba(198,255,58,.14);
+  --warn:#ffb21f;
+  --crit:#ff4b3a;
+  --f-dot:"Doto",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+html,body,*{scrollbar-width:none;-ms-overflow-style:none}
+*::-webkit-scrollbar{display:none;width:0;height:0}
+body{color:var(--ink);font:12px/1.55 var(--f-mono);padding-inline:16px;padding-block:16px;-webkit-font-smoothing:antialiased}
+a{color:var(--ink);text-underline-offset:3px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:1px solid var(--acc);outline-offset:2px}
+.frame{max-width:1320px;margin:0 auto;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--line)}
+.grid{display:grid;gap:1px;background:var(--line)}
+.grid>*{background:var(--bg);min-width:0}
+.one{grid-template-columns:minmax(0,1fr)}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+.sub{color:var(--dim);font-size:10.5px;letter-spacing:.04em}
+.pad{padding:14px 16px}
+.acc{color:var(--acc)} .warn{color:var(--warn)} .crit{color:var(--crit)} .dimc{color:var(--dim)}
+.num{font-variant-numeric:tabular-nums}
+.mono-break{word-break:break-all}
+
+/* system bar */
+.sysbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;max-width:1320px;margin:0 auto 10px;display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:rgba(6,6,6,.92);backdrop-filter:blur(6px);flex-wrap:wrap}
+.sysbar .brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:.08em}
+.sysbar .brand i{width:14px;height:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px}
+.sysbar .brand i b{background:var(--ink)} .sysbar .brand i b:nth-child(5){background:var(--acc)} .sysbar .brand i b:nth-child(even){background:transparent}
+.sysbar nav{display:flex;gap:4px;flex-wrap:wrap}
+.sysbar nav a{text-decoration:none;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border:1px solid transparent}
+.sysbar nav a:hover{border-color:var(--hair)}
+.clock{display:flex;gap:12px;align-items:center;font-size:10.5px;letter-spacing:.06em}
+.dot{width:7px;height:7px;background:var(--acc);display:inline-block;margin-right:6px;animation:blink 1.4s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+
+/* header */
+.doc{grid-template-columns:2.1fr 1fr 1fr .8fr 1.6fr}
+.doc .t1{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.doc .k{color:var(--dim);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.doc .mf{display:flex;justify-content:space-between;gap:12px}
+.cross{width:28px;height:28px;flex:none}
+
+/* hero */
+.hero{grid-template-columns:290px minmax(0,1fr) 290px}
+.col{display:grid;gap:1px;background:var(--line);align-content:start}
+.col>section{background:var(--bg)}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 12px;margin-top:10px}
+.kv>*{padding:4px 0;border-bottom:1px solid var(--hair);font-size:11px;min-width:0}
+.kv>:nth-child(odd){color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
+.kv>:nth-child(even){text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+ul.feat{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:4px;font-size:11px}
+ul.feat li::before{content:"· ";color:var(--dim)}
+.legend{display:grid;gap:7px;margin-top:10px;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.legend span{display:flex;align-items:center;gap:10px}
+.sw{width:10px;height:10px;border:1px solid var(--ink)}
+.sw.n{background:var(--acc);border-color:var(--acc)} .sw.w{background:var(--warn);border-color:var(--warn)} .sw.c{border-color:var(--crit)}
+.notes p{margin:8px 0 0;color:var(--dim);font-size:11px;max-width:40ch}
+.warnbox{display:flex;gap:12px;align-items:flex-start}
+.warnbox svg{flex:none}
+.center{display:flex;flex-direction:column}
+.stage{position:relative;padding:58px 34px 26px 74px;flex:1}
+.dim-top{position:absolute;top:22px;left:74px;right:34px;height:12px;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.dim-top::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid var(--line)}
+.dim-top span,.dim-left span{position:absolute;background:var(--bg);padding:0 8px;font-size:11px}
+.dim-top span{left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap}
+.dim-left{position:absolute;left:28px;top:58px;bottom:26px;width:12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.dim-left::before{content:"";position:absolute;top:0;bottom:0;left:50%;border-left:1px solid var(--line)}
+.dim-left span{top:50%;left:50%;transform:translate(-50%,-50%) rotate(-90deg);white-space:nowrap}
+.device{position:relative;border:1.5px solid var(--ink);border-radius:20px;padding:18px;display:grid;grid-template-columns:58px minmax(0,1fr);gap:18px;background:linear-gradient(180deg,#0d0d0c,#070707)}
+.device::before,.device::after{content:"";position:absolute;width:9px;height:9px;border:1px solid var(--line);border-radius:50%}
+.device::before{top:10px;right:10px} .device::after{bottom:10px;right:10px}
+.cells{display:grid;grid-template-rows:repeat(5,1fr);gap:6px;min-height:280px}
+.cells i{display:block;border:1px solid var(--line);border-radius:3px;position:relative}
+.cells i::after{content:attr(data-b);position:absolute;left:4px;bottom:2px;font-size:8.5px;font-style:normal;color:var(--dim)}
+.cells i.on{background:var(--acc);border-color:var(--acc);box-shadow:0 0 12px rgba(198,255,58,.35)}
+.screen{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:18px;align-items:start}
+.screen h2{margin:0;font-weight:500;font-size:19px;letter-spacing:.06em}
+.big{font-family:var(--f-dot);font-weight:700;font-size:clamp(84px,10vw,132px);line-height:.86;letter-spacing:-.02em;display:flex;align-items:flex-end;gap:6px;margin-top:6px}
+.big small{font-family:var(--f-mono);font-size:26px;font-weight:500;color:var(--acc);line-height:1.2}
+.status{margin-top:16px;padding-top:10px;border-top:1px solid var(--hair)}
+.status b{display:block;font-family:var(--f-dot);font-size:26px;font-weight:700;color:var(--acc);letter-spacing:.04em;margin-top:2px}
+.sysbox{margin-top:14px;border:1px solid var(--line);padding:10px 12px}
+.sysbox .kv{margin-top:6px}
+.sphere-wrap{position:relative;aspect-ratio:1/1;max-width:100%;border:1px solid var(--hair)}
+.sphere-wrap canvas{width:100%;height:100%;display:block}
+.sphere-wrap .cap{position:absolute;left:8px;bottom:6px;font-size:10px;color:var(--dim)}
+.sphere-wrap .cap2{position:absolute;right:8px;top:6px;font-size:10px;color:var(--dim)}
+.diag{margin:0 34px 22px 74px;border:1px solid var(--line);padding:12px 16px;display:flex;gap:16px;align-items:flex-start}
+.diag p{margin:4px 0 0;color:var(--dim);font-size:11px}
+.path{border-top:1px solid var(--line)}
+.path h3{margin:0;text-align:center;padding:10px;font-weight:500;font-size:11px;letter-spacing:.12em;border-bottom:1px solid var(--hair)}
+.path ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr)}
+.path li{border-right:1px solid var(--hair)} .path li:last-child{border-right:0}
+.path a{padding:14px 8px 12px;text-align:center;display:grid;gap:6px;justify-items:center;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;text-decoration:none}
+.path a:hover{background:#101010}
+.path a b{font-weight:500;color:var(--acc);font-size:11.5px}
+.path svg{width:34px;height:34px}
+.views canvas{display:block;width:100%;image-rendering:pixelated}
+.reg{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;margin-top:10px}
+.reg i{aspect-ratio:1;border:1px solid var(--faint);display:block}
+.reg i.b{background:var(--ink);border-color:var(--ink)} .reg i.a{background:var(--acc);border-color:var(--acc)}
+.hex{margin:10px 0 0;font-size:10.5px;line-height:1.6;color:var(--dim);white-space:pre;overflow:hidden;height:100px}
+.hex em{font-style:normal;color:var(--ink)}
+svg.circuit{width:100%;height:auto;margin-top:8px}
+.circuit .wire{stroke:var(--line);stroke-width:1}
+.circuit .pulse{stroke:var(--acc);stroke-width:1.6;stroke-dasharray:6 160;animation:flow 3.2s linear infinite}
+.circuit text{fill:var(--ink);font:10px var(--f-mono)}
+.circuit .g{fill:var(--bg);stroke:var(--ink)}
+@keyframes flow{to{stroke-dashoffset:-166}}
+.code{margin-top:10px;border:1px solid var(--hair);padding:10px;font-size:10.5px;line-height:1.6;overflow:auto;white-space:pre;color:var(--dim);background:var(--cell)}
+.code em{font-style:normal;color:var(--acc)}
+.approved{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:10px}
+
+/* manifesto + banner */
+.mani{grid-template-columns:220px minmax(0,1fr)}
+.reticle{display:grid;place-items:center;padding:24px}
+.reticle svg{width:120px;height:120px}
+.rows{display:grid;gap:1px;background:var(--line)}
+.rows p{margin:0;background:var(--bg);padding:13px 22px;font-size:clamp(13px,1.6vw,19px);letter-spacing:.08em;text-transform:uppercase}
+.rows p span{color:var(--dim)}
+.banner .title{display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,36px);padding:26px 16px 10px;font-family:var(--f-dot);font-weight:700;font-size:clamp(38px,8vw,104px);line-height:1;letter-spacing:.02em;text-align:center}
+.banner .title i{font-style:normal;color:var(--acc);font-size:.62em}
+.banner canvas{display:block;width:100%;height:84px}
+.banner .tag{display:flex;justify-content:space-between;gap:12px;padding:8px 18px 14px;color:var(--dim);font-size:11px;letter-spacing:.08em;text-transform:uppercase;flex-wrap:wrap}
+
+/* console */
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:22px 18px}
+.sec-head h2{margin:0;font-family:var(--f-dot);font-weight:700;font-size:clamp(30px,4vw,46px);line-height:1}
+.sec-head p{margin:6px 0 0;color:var(--dim);max-width:70ch}
+.flag{border:1px solid var(--acc);color:var(--acc);padding:4px 10px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tab{background:transparent;border:0;border-right:1px solid var(--hair);padding:12px 10px;text-align:left;cursor:pointer;display:grid;gap:2px}
+.tab:last-child{border-right:0}
+.tab b{font-size:11.5px;letter-spacing:.06em;font-weight:600}
+.tab span{font-size:10px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase}
+.tab:hover{background:#101010}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.tab[aria-selected="true"] span{color:#3d3d38}
+.panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:1px;background:var(--line)}
+.panel>div{background:var(--bg);padding:18px;min-width:0}
+.panel h3{margin:0 0 4px;font-size:15px;font-weight:600;letter-spacing:.04em}
+.lead{color:var(--dim);margin:0 0 14px;max-width:62ch}
+.step{display:flex;gap:10px;align-items:baseline;margin-top:18px;padding-top:12px;border-top:1px solid var(--hair)}
+.step:first-of-type{border-top:0;padding-top:0;margin-top:6px}
+.step b{font-family:var(--f-dot);font-size:20px;font-weight:700;color:var(--acc);line-height:1}
+.btn{border:1px solid var(--ink);background:transparent;padding:8px 14px;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;font-size:11px;font-weight:600}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#0a0a0a}
+.btn.pri:hover{background:var(--ink);border-color:var(--ink)}
+.btn.sm{padding:4px 9px;font-size:10px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.field{display:grid;gap:5px;margin-top:12px;min-width:0}
+.field label{font-size:10.5px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.field input[type=text],.field input[type=number],.field select,.field textarea{background:var(--cell);border:1px solid var(--hair);padding:8px 10px;width:100%;min-width:0}
+.field textarea{resize:vertical;min-height:70px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc);outline:none}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.checks{display:grid;gap:6px;margin-top:8px}
+.checks label{display:flex;gap:8px;align-items:center;font-size:11.5px;text-transform:none;letter-spacing:0;color:var(--ink)}
+.checks input{accent-color:var(--acc)}
+table.t{width:100%;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}
+.t th{color:var(--dim);font-weight:500;text-align:left;text-transform:uppercase;letter-spacing:.06em;font-size:10px;padding:6px;border-bottom:1px solid var(--line);white-space:nowrap}
+.t td{padding:7px 6px;border-bottom:1px solid var(--hair);vertical-align:top}
+.t.click tr{cursor:pointer}
+.t.click tbody tr:hover td{background:#111}
+.t tr.sel td{background:var(--acc-dim)}
+.scroll{overflow-x:auto}
+.pill{display:inline-block;border:1px solid currentColor;padding:1px 7px;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.log{margin-top:12px;border:1px solid var(--hair);height:150px;overflow:auto;padding:8px 10px;font-size:10.5px;line-height:1.7;background:var(--cell)}
+.log div{white-space:pre-wrap;word-break:break-all}
+.log .ts{color:var(--faint)}
+.vis canvas{display:block;width:100%;border:1px solid var(--hair);image-rendering:pixelated}
+.readout{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--hair);margin-top:12px;border:1px solid var(--hair)}
+.readout>div{background:var(--bg);padding:10px;min-width:0}
+.readout b{display:block;font-family:var(--f-dot);font-size:22px;font-weight:700;line-height:1.15;margin-top:3px;overflow-wrap:anywhere}
+.out{margin-top:8px;border:1px dashed var(--hair);padding:10px;font-size:10.5px;word-break:break-all;background:var(--cell);max-height:140px;overflow:auto;position:relative}
+.out.ok{border-color:var(--acc);color:var(--acc)}
+.out.bad{border-color:var(--crit);color:var(--crit)}
+.outhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px}
+.note{margin-top:12px;font-size:10.5px;color:var(--dim);border-left:2px solid var(--warn);padding-left:10px}
+.note.g{border-left-color:var(--acc)}
+.mk{border:1px solid var(--hair);padding:12px;margin-top:10px;display:grid;gap:8px}
+.bar{height:10px;border:1px solid var(--line);position:relative;background:repeating-linear-gradient(90deg,transparent 0 3px,var(--hair) 3px 4px)}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--acc);display:block;transition:width .4s}
+.mk .row{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.progress{height:6px;background:var(--hair);margin-top:8px;position:relative}
+.progress i{position:absolute;inset:0 auto 0 0;background:var(--acc);display:block}
+
+/* contracts */
+.files{display:grid;grid-template-columns:230px minmax(0,1fr);gap:1px;background:var(--line)}
+.files>div{background:var(--bg);min-width:0}
+.flist{display:grid}
+.flist button{all:unset;cursor:pointer;padding:9px 14px;border-bottom:1px solid var(--hair);display:flex;justify-content:space-between;gap:8px;font-size:11px}
+.flist button:hover{background:#101010}
+.flist button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.flist button span{color:var(--dim);font-size:10px}
+.flist button[aria-pressed="true"] span{color:#3d3d38}
+.src{margin:0;padding:14px 16px;font-size:11px;line-height:1.6;white-space:pre;overflow:auto;max-height:520px;color:var(--ink)}
+.src .c{color:var(--dim)} .src .k{color:var(--acc)}
+.split3{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+/* footer */
+.fcols{grid-template-columns:1.5fr 1fr 1fr 1.1fr 1.2fr}
+.fcols>div{padding:18px 16px}
+.fcols h4{margin:0 0 10px;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:500}
+.fcols ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.fcols a{text-decoration:none;font-size:11.5px}
+.fcols a:hover{color:var(--acc)}
+.fcols a[target]::after{content:" ↗";color:var(--dim);font-size:10px}
+.fbrand .name{font-family:var(--f-dot);font-weight:700;font-size:30px;line-height:1}
+.fbrand p{color:var(--dim);margin:10px 0 0;max-width:38ch;font-size:11px}
+.sysrow{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:11px}
+.sysrow span:nth-child(odd){color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-size:10px}
+.legal{padding:12px 16px;color:var(--dim);font-size:10.5px;line-height:1.6}
+.foot{grid-template-columns:1.4fr 1fr 1.4fr}
+.foot>div{display:flex;align-items:center;gap:14px;padding:12px 16px;flex-wrap:wrap}
+.barcode{display:flex;height:26px;align-items:stretch;gap:1px}
+.barcode i{background:var(--ink);display:block}
+.foot .mid{justify-content:center;text-align:center;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;line-height:1.5}
+.foot .marks{justify-content:flex-end;gap:10px;font-weight:600;letter-spacing:.06em;font-size:10.5px}
+.foot .marks span{border:1px solid var(--line);padding:2px 6px}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;font-size:11px;letter-spacing:.06em;z-index:50;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+
+@media (max-width:1120px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .col.left,.col.right{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .doc{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .doc>:first-child{grid-column:1/-1}
+  .tabs{grid-template-columns:repeat(3,1fr)}
+  .tab{border-bottom:1px solid var(--hair)}
+  .fcols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fcols>.fbrand{grid-column:1/-1}
+}
+@media (max-width:760px){
+  .col.left,.col.right{grid-template-columns:minmax(0,1fr)}
+  .screen{grid-template-columns:minmax(0,1fr)}
+  .stage{padding:44px 14px 18px 18px}
+  .dim-top{left:18px;right:14px;top:14px}
+  .dim-left{display:none}
+  .diag{margin:0 14px 18px}
+  .device{grid-template-columns:34px minmax(0,1fr);gap:12px;padding:14px}
+  .path ol{grid-template-columns:repeat(3,1fr)}
+  .path li:nth-child(3){border-right:0}
+  .mani{grid-template-columns:minmax(0,1fr)}
+  .reticle{display:none}
+  .tabs{grid-template-columns:repeat(2,1fr)}
+  .panel,.files,.split3,.foot,.fcols{grid-template-columns:minmax(0,1fr)}
+  .row2{grid-template-columns:minmax(0,1fr)}
+  .foot .marks,.foot .mid{justify-content:flex-start;text-align:left}
+  .readout b{font-size:17px}
+  .sysbar nav{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .circuit .pulse,.dot{animation:none}
+  *{transition:none!important}
+}
+
+/* landing additions */
+.sysbar{display:grid;grid-template-columns:1fr auto 1fr}
+.sysbar .brand{justify-self:start;display:flex;align-items:center;gap:8px;font-family:var(--f-dot);font-weight:900;font-size:20px;letter-spacing:.06em;text-decoration:none}
+.brand-logo{display:block;width:40px;height:40px;object-fit:contain;flex-shrink:0}
+.fbrand .name{display:flex;align-items:center;gap:12px}
+.fbrand .brand-logo{width:52px;height:52px}
+.sysbar nav{justify-self:center}
+.sysbar .cta{justify-self:end;display:flex;gap:8px}
+.lbtn{display:inline-block;border:1px solid var(--ink);padding:6px 12px;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;white-space:nowrap}
+.lbtn:hover{background:var(--ink);color:var(--bg)}
+.lbtn.pri{background:var(--acc);border-color:var(--acc);color:#0a0a0a}
+.lbtn.pri:hover{background:var(--ink);border-color:var(--ink)}
+.lbtn.big{padding:11px 18px;font-size:11.5px}
+.flow5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.flow5>div{padding:18px 16px;position:relative}
+.flow5 .n{font-family:var(--f-dot);font-weight:700;font-size:30px;color:var(--acc);line-height:1}
+.flow5 b{display:block;margin:10px 0 6px;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.flow5 p{margin:0;color:var(--dim);font-size:11.5px}
+.momentbar{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;padding:14px 18px;background:var(--acc)!important;color:#0a0a0a}
+.momentbar b{font-family:var(--f-dot);font-size:22px;font-weight:700;color:#0a0a0a}
+.momentbar p{margin:0;max-width:90ch;color:#0a0a0a}
+.momentbar code{color:#0a0a0a}
+.mods{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mods a{display:flex;flex-direction:column;gap:6px;padding:18px;text-decoration:none}
+.mods a:hover{background:#0f0f0e}
+.mods .tagx{font-size:10px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+.mods h3{margin:4px 0;font-size:14px;font-weight:600}
+.mods p{margin:0;color:var(--dim);font-size:11.5px}
+.mods .go{margin-top:auto;padding-top:12px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
+.uses5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.uses5>div{padding:16px}
+.uses5 b{display:block;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.uses5 p{margin:0;color:var(--dim);font-size:11.5px}
+.techt{padding:0!important}
+.techt table{width:100%;border-collapse:collapse;font-size:11.5px}
+.techt th{text-align:left;font-weight:500;color:var(--dim);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+.techt td{padding:10px 16px;border-bottom:1px solid var(--hair);vertical-align:top}
+.techt td:first-child{white-space:nowrap}
+.road5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.road5>div{padding:16px}
+.road5 .ph{font-size:10px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase}
+.road5 b{display:block;margin:8px 0 6px;font-size:12.5px}
+.road5 p{margin:0;color:var(--dim);font-size:11.5px}
+.road5 .done{background:var(--acc)!important;color:#0a0a0a}
+.road5 .done .ph,.road5 .done b,.road5 .done p{color:#0a0a0a}
+.faqx details{border-bottom:1px solid var(--hair);padding:0 18px}
+.faqx details:last-child{border-bottom:0}
+.faqx summary{cursor:pointer;padding:15px 0;font-size:12.5px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faqx summary::-webkit-details-marker{display:none}
+.faqx summary::after{content:"+";color:var(--acc);font-size:16px;line-height:1}
+.faqx details[open] summary::after{content:"−"}
+.faqx p{margin:0 0 16px;color:var(--dim);max-width:86ch}
+.ctab{text-align:center;padding:40px 16px!important}
+.ctab h2{margin:0;font-family:var(--f-dot);font-weight:900;font-size:clamp(32px,5vw,64px);line-height:1}
+.ctab p{color:var(--dim);margin:12px auto 22px;max-width:56ch}
+.ctab .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+@media (max-width:1120px){
+  .flow5,.road5{grid-template-columns:minmax(0,1fr)}
+  .mods{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .uses5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sysbar nav{display:none}
+  .sysbar{grid-template-columns:1fr auto}
+}
+@media (max-width:760px){
+  .mods,.uses5{grid-template-columns:minmax(0,1fr)}
+  .sysbar .cta .lbtn:not(.pri){display:none}
+}
+</style>
+
+<div class="sysbar" role="banner">
+  <a class="brand" href="#overview" aria-label="Qairos home"><img class="brand-logo" src="brand/qairos-logo.png" width="40" height="40" alt="">QAIROS</a>
+  <nav aria-label="Site">
+    <a href="#how">How it works</a><a href="#modules">Modules</a><a href="#use-cases">Use cases</a><a href="#technology">Technology</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a>
+  </nav>
+  <div class="cta"><a class="lbtn" href="app/index.html#contracts">Docs</a><a class="lbtn pri" href="app/index.html#dashboard">Launch App</a></div>
+</div>
+
+<div class="frame" id="overview">
+
+  <header class="grid doc">
+    <div class="pad">
+      <div class="t1">QRS-01 // QAIROS</div>
+      <div class="t1" style="font-weight:500;color:var(--acc)">Quantum Early Warning · Post-Quantum Tools</div>
+      <div class="sub" style="margin-top:8px">Quantum early-warning and protection layer for Ethereum L1.<br>Open source. Verify, don't trust.</div>
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><a class="lbtn pri big" href="app/index.html#ark">Protect my account</a><a class="lbtn big" href="#how">How it works</a></div>
+    </div>
+    <div class="pad"><div class="k">Classification</div>PUBLIC // MIT LICENSE</div>
+    <div class="pad"><div class="k">Document ID</div><span class="num">QRS-01-2026-10-C</span></div>
+    <div class="pad"><div class="k">Revision</div><span class="num">C.02</span></div>
+    <div class="pad mf">
+      <div><div class="k">Target network</div>Ethereum L1<br><span class="sub">Mainnet · chain ID 1</span></div>
+      <svg class="cross" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><circle cx="14" cy="14" r="12.5"/><circle cx="14" cy="14" r="4"/><path d="M14 0v9M14 19v9M0 14h9M19 14h9"/></svg>
+    </div>
+  </header>
+
+  <div class="grid hero">
+    <div class="col left">
+      <section class="pad">
+        <div class="lbl">Specifications</div>
+        <div class="kv">
+          <span>Model</span><span>QRS-01</span>
+          <span>Solidity</span><span>0.8.28 · via-IR</span>
+          <span>Canary rungs</span><span>12 (16–256 bit)</span>
+          <span>Armed curves</span><span>SEC 2 · 5 curves</span>
+          <span>Threat levels</span><span>0 – 5</span>
+          <span>PQ signature</span><span>ML-DSA-44 (FIPS 204)</span>
+          <span>Commit hash</span><span>keccak256</span>
+          <span>Test suite</span><span class="acc">23 / 23 pass</span>
+        </div>
+      </section>
+      <section class="pad">
+        <div class="lbl">Modules</div>
+        <ul class="feat">
+          <li>Qairos Canary: ECDLP bounty ladder</li>
+          <li>Qairos Oracle: on-chain threat level</li>
+          <li>Qairos Breaker: automatic circuit breaker</li>
+          <li>Qairos Ark: pre-Moment ownership proof</li>
+          <li>PQ Signer: ML-DSA-44 keys and signatures</li>
+          <li>Qairos Market: prediction and exposure cover</li>
+        </ul>
+      </section>
+      <section class="pad">
+        <div class="lbl">Status Indicator</div>
+        <div class="legend">
+          <span><i class="sw n"></i>Nominal · level 0</span>
+          <span><i class="sw w"></i>Watch · level 1–2</span>
+          <span><i class="sw c"></i>Critical · level 3–5</span>
+        </div>
+      </section>
+      <section class="pad">
+        <div class="lbl">Gas Profile</div>
+        <div class="kv">
+          <span>Canary commit</span><span class="num">45,591</span>
+          <span>Canary reveal</span><span class="num">≤ 130,801</span>
+          <span>EC mul 256-bit</span><span class="num">≈ 360,000</span>
+          <span>Ark commit</span><span class="num">≈ 95,800</span>
+          <span>Vault recover</span><span class="num">≤ 81,019</span>
+        </div>
+      </section>
+      <section class="pad notes">
+        <div class="lbl">Notes</div>
+        <p>Training rungs (16–96 bit) can be solved on ordinary hardware. They never move the threat level.</p>
+        <p>An account that has sent a transaction has published its public key.</p>
+      </section>
+      <section class="pad warnbox">
+        <svg width="26" height="24" viewBox="0 0 26 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M13 1.5 25 22.5H1z"/><path d="M13 9v6M13 17.5v1.5"/></svg>
+        <div>
+          <div class="lbl">Warning</div>
+          <p style="margin:6px 0 0;color:var(--dim);font-size:11px">Qairos never asks for a seed phrase or private key. Post-quantum keys are generated in your browser and only their hash goes on-chain.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="center">
+      <div class="stage">
+        <div class="dim-top"><span>ECDLP · secp256k1 · 256.00 BIT</span></div>
+        <div class="dim-left"><span>QAIROS MOMENT ≈ 2029 (WORST CASE)</span></div>
+        <div class="device">
+          <div class="cells" aria-label="Armed rungs, none broken">
+            <i data-b="256"></i><i data-b="224"></i><i data-b="192"></i><i data-b="160"></i><i data-b="128"></i>
+          </div>
+          <div class="screen">
+            <div>
+              <h2>QAIROS CORE</h2>
+              <div class="sub" style="margin-top:12px">LARGEST PUBLIC QUANTUM ECC BREAK</div>
+              <div class="big num"><span>15</span><small>bit</small></div>
+              <div class="sub" style="margin-top:6px">of 256 needed · <span class="acc num">5.9%</span> of the way</div>
+              <div class="status">
+                <div class="sub">THREAT LEVEL 00 / 05</div>
+                <b>NOMINAL</b>
+              </div>
+              <div class="sysbox">
+                <div class="lbl" style="font-size:10px">Record</div>
+                <div class="kv">
+                  <span>Date</span><span>24 Apr 2026</span>
+                  <span>Keyspace</span><span class="num">32,767</span>
+                  <span>Jump vs prev</span><span class="num">×512</span>
+                  <span>Hardware</span><span>Public cloud QPU</span>
+                  <span>Source</span><span><a href="https://blog.projecteleven.com/posts/project-eleven-awards-1-btc-q-day-prize-for-largest-quantum-attack-on-elliptic-curve-cryptography-to-date" target="_blank" rel="noopener">Project Eleven</a></span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="sphere-wrap">
+                <canvas id="sphere" role="img" aria-label="Animated pixel sphere showing a qubit state vector"></canvas>
+                <span class="cap2">|0⟩</span>
+                <span class="cap">QUBIT VIEW · q[0]</span>
+              </div>
+              <div class="kv" style="margin-top:8px">
+                <span>θ</span><span class="num" id="theta">0.00</span>
+                <span>φ</span><span class="num" id="phi">0.00</span>
+                <span>P(|1⟩)</span><span class="num acc" id="p1">0.000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="diag">
+        <svg width="26" height="24" viewBox="0 0 26 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M13 1.5 25 22.5H1z"/><path d="M13 9v6M13 17.5v1.5"/></svg>
+        <div>
+          <div class="lbl">Diagnostic Message</div>
+          <p>All armed rungs (128-bit and up) are intact. Public quantum capability stands at 15 bits.<br>Migrating exposed EOAs before 2029 is still recommended.</p>
+        </div>
+      </div>
+      <div class="path">
+        <h3>RECOMMENDED DEFENSE PATH</h3>
+        <ol>
+          <li><a href="app/index.html#ark"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor"><rect x="6" y="14" width="22" height="16"/><path d="M11 14V9a6 6 0 0 1 12 0v5M17 20v4"/></svg>Commit<b>ark</b></a></li>
+          <li><a href="app/index.html#signer"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor"><path d="M6 26 22 10l4 4-16 16H6z"/><path d="M19 13l4 4"/></svg>Sign<b>ml-dsa</b></a></li>
+          <li><a href="app/index.html#guard"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor"><path d="M17 3 29 8v9c0 7-5 12-12 14C10 29 5 24 5 17V8z"/><path d="m12 17 4 4 7-8"/></svg>Guard<b>breaker</b></a></li>
+          <li><a href="app/index.html#insure"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor"><path d="M4 26h26M8 26V14M14 26V9M20 26V17M26 26V5"/></svg>Insure<b>market</b></a></li>
+          <li><a href="app/index.html#canary"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor"><circle cx="15" cy="15" r="9"/><path d="m22 22 8 8M11 15h8M15 11v8"/></svg>Watch<b>canary</b></a></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="col right views">
+      <section class="pad">
+        <div class="lbl">Keyspace View</div>
+        <canvas id="keymini" height="90" aria-hidden="true"></canvas>
+        <div class="sub" style="margin-top:6px">Baby-step giant-step sweep · ambient</div>
+      </section>
+      <section class="pad">
+        <div class="lbl">Qubit Register</div>
+        <div class="reg" id="reg" aria-hidden="true"></div>
+        <div class="sub" style="margin-top:6px">128-cell register · ambient</div>
+      </section>
+      <section class="pad">
+        <div class="lbl">Circuit Diagram</div>
+        <svg class="circuit" viewBox="0 0 250 120" role="img" aria-label="Three-qubit circuit: Hadamard gates, CNOT entanglement, QFT, measurement">
+          <g class="wire"><path d="M24 24H240M24 60H240M24 96H240"/></g>
+          <g><path class="pulse" d="M24 24H240"/><path class="pulse" d="M24 60H240" style="animation-delay:-1s"/><path class="pulse" d="M24 96H240" style="animation-delay:-2.1s"/></g>
+          <text x="2" y="27">q0</text><text x="2" y="63">q1</text><text x="2" y="99">q2</text>
+          <rect class="g" x="40" y="14" width="20" height="20"/><text x="46" y="28">H</text>
+          <rect class="g" x="40" y="50" width="20" height="20"/><text x="46" y="64">H</text>
+          <path d="M90 24V66" stroke="var(--ink)"/><circle cx="90" cy="24" r="3.5" fill="var(--ink)"/><circle class="g" cx="90" cy="60" r="7"/><path d="M83 60h14M90 53v14" stroke="var(--ink)"/>
+          <path d="M130 60V102" stroke="var(--ink)"/><circle cx="130" cy="60" r="3.5" fill="var(--ink)"/><circle class="g" cx="130" cy="96" r="7"/><path d="M123 96h14M130 89v14" stroke="var(--ink)"/>
+          <rect class="g" x="160" y="86" width="26" height="20"/><text x="164" y="100">QFT</text>
+          <g stroke="var(--ink)" fill="none"><rect class="g" x="206" y="14" width="22" height="20"/><path d="M210 30a7 7 0 0 1 14 0M217 30l5-9"/>
+          <rect class="g" x="206" y="50" width="22" height="20"/><path d="M210 66a7 7 0 0 1 14 0M217 66l5-9"/>
+          <rect class="g" x="206" y="86" width="22" height="20"/><path d="M210 102a7 7 0 0 1 14 0M217 102l5-9"/></g>
+        </svg>
+      </section>
+      <section class="pad">
+        <div class="lbl">Shor Trace</div>
+        <div class="hex" id="hex" aria-hidden="true"></div>
+      </section>
+      <section class="pad">
+        <div class="lbl">Integrate</div>
+        <div class="code"><em>contract</em> MyVault <em>is</em> QairosGuard {
+  <em>constructor</em>(IQairosOracle o)
+    QairosGuard(o, 1) {}
+
+  <em>function</em> withdraw(uint a)
+    external quantumSafe { … }
+}</div>
+      </section>
+      <section class="pad">
+        <div class="lbl">Build</div>
+        <div class="kv">
+          <span>Compiler</span><span>solc 0.8.28</span>
+          <span>Framework</span><span>Foundry 1.5.1</span>
+          <span>Local deploy</span><span class="acc">Anvil · OK</span>
+          <span>Public deploy</span><span class="warn">Pending audit</span>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="grid mani">
+    <div class="reticle"><svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 30V8h22M90 8h22v22M112 90v22H90M30 112H8V90"/><path d="M60 52v14M52 66h16"/></svg></div>
+    <div class="rows">
+      <p><span>// </span>If a quantum computer grows large enough</p>
+      <p>Every exposed public key</p>
+      <p>Can be turned back into its private key</p>
+      <p>Qairos sounds the alarm before that happens<span> //</span></p>
+    </div>
+  </div>
+
+  <div class="grid banner one">
+    <div>
+      <div class="title"><i>∞</i>QAIROS<i>∞</i></div>
+      <canvas id="wave" aria-hidden="true"></canvas>
+      <div class="tag"><span>// Sensor and switch for the post-quantum era</span><span>to the Qairos Moment and back</span></div>
+    </div>
+  </div>
+
+  <div class="grid one" id="how"><div><div class="sec-head"><div><div class="sub">SECTION 02 // HOW IT WORKS</div><h2>A sensor, then a switch</h2><p>Qairos measures quantum capability with real cryptographic bounties, publishes it as one on-chain number, and lets every contract and holder react automatically.</p></div></div></div></div>
+  <div class="grid flow5">
+    <div><span class="n">1</span><b>Canary</b><p>Twelve elliptic-curve keys from 16 to 256 bits carry bounties. The contract verifies any claimed key by itself.</p></div>
+    <div><span class="n">2</span><b>Oracle</b><p>Each broken armed key (128 bits and up) raises <code>threatLevel()</code> by one, from 0 to 5.</p></div>
+    <div><span class="n">3</span><b>Guard</b><p>Contracts that inherit QairosGuard lock sensitive functions when the level reaches their threshold.</p></div>
+    <div><span class="n">4</span><b>Ark</b><p>Holders who registered a post-quantum key beforehand recover funds with proof no attacker can forge.</p></div>
+    <div><span class="n">5</span><b>Markets</b><p>Prediction markets and insurance settle straight from the oracle. No votes, no disputes.</p></div>
+  </div>
+  <div class="grid one"><div class="momentbar"><b>The Qairos Moment</b><p>The first time an armed canary key breaks. It is recorded on-chain as a timestamp, and every Qairos module reacts to it.</p></div></div>
+  <div class="grid one" id="modules"><div><div class="sec-head"><div><div class="sub">SECTION 03 // MODULES</div><h2>Six tools, one app</h2><p>Every tool runs real cryptography in your browser and ends in a ready-to-send Ethereum L1 transaction.</p></div></div></div></div>
+  <div class="grid mods">
+    <a href="app/index.html#ark"><span class="tagx">Protect</span><h3>Qairos Ark</h3><p>Generate an ML-DSA-44 post-quantum key and commit its hash on-chain. It proves ownership after the Qairos Moment.</p><span class="go">Open in app →</span></a>
+    <a href="app/index.html#recover"><span class="tagx">Protect</span><h3>Recovery</h3><p>Load your recovery kit and build the two-step transactions that move vault funds to a fresh address.</p><span class="go">Open in app →</span></a>
+    <a href="app/index.html#signer"><span class="tagx">Protect</span><h3>PQ Signer</h3><p>Create and verify lattice-based signatures under NIST FIPS 204, entirely in the browser.</p><span class="go">Open in app →</span></a>
+    <a href="app/index.html#oracle"><span class="tagx">Monitor</span><h3>Threat level</h3><p>Read QairosOracle on L1 and follow a clear response guide for every level from 0 to 5.</p><span class="go">Open in app →</span></a>
+    <a href="app/index.html#canary"><span class="tagx">Monitor</span><h3>Canary ladder</h3><p>Inspect every bounty curve and solve training rungs up to 40 bits in your browser, then build the claim.</p><span class="go">Open in app →</span></a>
+    <a href="app/index.html#guard"><span class="tagx">Build</span><h3>Guard builder</h3><p>Generate a Solidity contract that inherits QairosGuard and locks the functions you choose.</p><span class="go">Open in app →</span></a>
+  </div>
+  <div class="grid one" id="use-cases"><div><div class="sec-head"><div><div class="sub">SECTION 04 // USE CASES</div><h2>Built for whoever holds the keys</h2><p>From a single wallet to a protocol treasury, each group gets a concrete action today.</p></div></div></div></div>
+  <div class="grid uses5">
+    <div><b>Long-term holders</b><p>Register a post-quantum key for accounts whose public key is already exposed.</p></div>
+    <div><b>DAO treasuries</b><p>Wrap treasury withdrawals in QairosGuard so a stolen ECDSA key cannot drain them.</p></div>
+    <div><b>DeFi protocols</b><p>Read <code>threatLevel()</code> like a price feed and pause risky paths automatically.</p></div>
+    <div><b>Custodians</b><p>Insure exposed balances and keep pre-Moment ownership proofs for every client account.</p></div>
+    <div><b>Researchers</b><p>Claim bounties and publish verifiable progress against elliptic-curve keys.</p></div>
+  </div>
+  <div class="grid one" id="technology"><div><div class="sec-head"><div><div class="sub">SECTION 05 // TECHNOLOGY</div><h2>Standards, not promises</h2><p>Every primitive Qairos uses is a published standard or an open-source library you can inspect.</p></div></div></div></div>
+  <div class="grid one"><div class="techt scroll"><table>
+    <thead><tr><th>Component</th><th>Used for</th><th>Reference</th></tr></thead>
+    <tbody>
+      <tr><td>ML-DSA-44</td><td>Post-quantum keys and signatures in Ark and PQ Signer</td><td><a href="https://csrc.nist.gov/pubs/fips/204/final" target="_blank" rel="noopener">NIST FIPS 204</a></td></tr>
+      <tr><td>SEC 2 curves</td><td>Armed canary rungs: secp128r1, secp160k1, secp192k1, secp224k1, secp256k1</td><td><a href="https://www.secg.org/sec2-v2.pdf" target="_blank" rel="noopener">SECG SEC 2 v2</a></td></tr>
+      <tr><td>keccak256</td><td>Commitments, function selectors, event topics</td><td><a href="https://ethereum.org/developers/docs/smart-contracts/" target="_blank" rel="noopener">Ethereum docs</a></td></tr>
+      <tr><td>Baby-step giant-step</td><td>In-browser solver for training rungs up to 40 bits</td><td>Shanks, 1971</td></tr>
+      <tr><td>noble-post-quantum</td><td>Minimal, auditable JS implementation of ML-DSA</td><td><a href="https://github.com/paulmillr/noble-post-quantum" target="_blank" rel="noopener">GitHub</a></td></tr>
+      <tr><td>Solidity 0.8.28 · Foundry</td><td>Seven contracts, 23 tests, deploy script</td><td><a href="https://github.com/foundry-rs/foundry" target="_blank" rel="noopener">Foundry</a></td></tr>
+      <tr><td>Ethereum PQ roadmap</td><td>Why account-level signature agility matters</td><td><a href="https://ethereum.org/roadmap/security/quantum-resistance/" target="_blank" rel="noopener">ethereum.org</a></td></tr>
+      <tr><td>Quantum ECC record</td><td>15-bit key broken on public quantum hardware, April 2026</td><td><a href="https://blog.projecteleven.com/posts/project-eleven-awards-1-btc-q-day-prize-for-largest-quantum-attack-on-elliptic-curve-cryptography-to-date" target="_blank" rel="noopener">Project Eleven</a></td></tr>
+    </tbody></table></div></div>
+  <div class="grid one" id="roadmap"><div><div class="sec-head"><div><div class="sub">SECTION 06 // ROADMAP</div><h2>From prototype to L1</h2><p>Each phase ships only when the previous one is verified.</p></div></div></div></div>
+  <div class="grid road5">
+    <div class="done"><span class="ph">Phase 1 · Done</span><b>Prototype</b><p>Contracts, 23 passing tests, local deployment, working app.</p></div>
+    <div><span class="ph">Phase 2</span><b>Sepolia testnet</b><p>Public deployment, funded training bounties, wallet connection.</p></div>
+    <div><span class="ph">Phase 3</span><b>Independent audit</b><p>Full review of contracts and curve math.</p></div>
+    <div><span class="ph">Phase 4</span><b>Ethereum mainnet</b><p>Deploy on L1, seed armed bounties, open markets.</p></div>
+    <div><span class="ph">Phase 5</span><b>PQ wallets</b><p>On-chain ML-DSA or Falcon verification through account abstraction.</p></div>
+  </div>
+  <div class="grid one" id="faq"><div><div class="sec-head"><div><div class="sub">SECTION 07 // FAQ</div><h2>Questions</h2><p>Short answers. The app has the full detail.</p></div></div></div></div>
+  <div class="grid one"><div class="faqx">
+    <details><summary>Can Qairos stop a quantum computer?</summary><p>No. Qairos detects the capability as soon as someone proves it on-chain, then triggers the protections you set up in advance: locked contracts, a recovery path and insurance.</p></details>
+    <details><summary>What if an attacker never claims a bounty?</summary><p>Then the canary stays silent. Qairos catches attackers who reveal capability for money. That is why the Ark and Guard should be set up early, not only when the alarm sounds.</p></details>
+    <details><summary>Are my keys sent anywhere?</summary><p>No. Keys are generated and used inside your browser. Only a 32-byte hash goes on-chain. The recovery kit is saved only when you choose to download it.</p></details>
+    <details><summary>Why can training rungs be solved in a browser?</summary><p>They are small on purpose (16 to 96 bits) to prove the mechanism end to end. They never move the threat level. Only armed rungs from 128 bits up do.</p></details>
+    <details><summary>Can I use it on mainnet today?</summary><p>Not yet. The contracts are tested and the app already builds correct L1 transactions. Mainnet follows the testnet phase and an independent audit.</p></details>
+  </div></div>
+  <div class="grid one"><div class="ctab">
+    <h2>Be ready before the Qairos Moment</h2>
+    <p>Register a post-quantum key in under a minute. Nothing leaves your browser except a hash.</p>
+    <div class="row"><a class="lbtn pri big" href="app/index.html#ark">Launch App</a><a class="lbtn big" href="app/index.html#contracts">Read the contracts</a></div>
+  </div></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="grid fcols" id="resources">
+      <div class="fbrand">
+        <div class="name"><img class="brand-logo" src="brand/qairos-logo.png" width="52" height="52" alt="">QAIROS</div>
+        <p>Quantum early warning and protection for Ethereum L1. From the Greek <i>kairos</i>: the decisive moment.</p>
+        <div style="margin-top:14px"><a class="lbtn pri" href="app/index.html#dashboard">Launch App</a></div>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="app/index.html#ark">Qairos Ark</a></li>
+        <li><a href="app/index.html#oracle">Threat level</a></li>
+        <li><a href="app/index.html#canary">Canary ladder</a></li>
+        <li><a href="app/index.html#markets">Markets</a></li>
+      </ul></div>
+      <div><h4>Developers</h4><ul>
+        <li><a href="app/index.html#contracts">Contracts</a></li>
+        <li><a href="app/index.html#guard">Guard builder</a></li>
+        <li><a href="app/index.html#abi">ABI &amp; calldata</a></li>
+        <li><a href="app/index.html#settings">Network settings</a></li>
+      </ul></div>
+      <div><h4>Site</h4><ul>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#technology">Technology</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul></div>
+      <div><h4>Research</h4><ul>
+        <li><a href="https://ethereum.org/roadmap/security/quantum-resistance/" target="_blank" rel="noopener">Ethereum PQ roadmap</a></li>
+        <li><a href="https://csrc.nist.gov/pubs/fips/204/final" target="_blank" rel="noopener">NIST FIPS 204</a></li>
+        <li><a href="https://www.secg.org/sec2-v2.pdf" target="_blank" rel="noopener">SEC 2 curves</a></li>
+      </ul></div>
+    </div>
+    <div class="grid foot">
+      <div><div class="barcode" id="barcode" aria-hidden="true"></div><span class="num">QRS-01-2026-10-C</span></div>
+      <div class="mid">Engineered for the Qairos Moment.<br>Designed for holders.</div>
+      <div class="marks"><span>FIPS 204</span><span>SEC 2</span><span>MIT</span><span>© 2026</span></div>
+    </div>
+  </footer>
+</div>
+<script>
+(function(){
+"use strict";
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const ACC=css('--acc')||'#c6ff3a', INK=css('--ink')||'#ecebe4', DIM=css('--dim')||'#8f8e86', FAINT=css('--faint')||'#45443f';
+const $=id=>document.getElementById(id); const DPR=Math.min(window.devicePixelRatio||1,2);
+function fit(c,h){ const w=c.clientWidth||300, hh=h||c.clientHeight||w; c.width=Math.round(w*DPR); c.height=Math.round(hh*DPR); const ctx=c.getContext('2d'); ctx.setTransform(DPR,0,0,DPR,0,0); return {ctx,w,h:hh}; }
+function visLoop(el,fn){ let on=true; if('IntersectionObserver' in window){ new IntersectionObserver(e=>{ const was=on; on=e[0].isIntersecting; if(on&&!was) tick(performance.now()); }).observe(el); } function tick(t){ if(!on) return; fn(t||0); if(!reduce) requestAnimationFrame(tick); } tick(performance.now()); }
+const sph=$('sphere'); const pts=[]; for(let i=0;i<620;i++){ const y=1-(i/619)*2, r=Math.sqrt(1-y*y), a=i*2.39996; pts.push([Math.cos(a)*r,y,Math.sin(a)*r]); }
+let S=fit(sph);
+visLoop(sph,t=>{ const {ctx,w,h}=S; ctx.clearRect(0,0,w,h); const cx=w/2, cy=h/2, R=w*0.38, cell=Math.max(3,Math.round(w/70));
+  const a=t*0.00035, ca=Math.cos(a), sa=Math.sin(a), ct=Math.cos(.42), st=Math.sin(.42);
+  const proj=(x,y,z)=>{ const X=x*ca+z*sa; let Z=-x*sa+z*ca; const Y=y*ct-Z*st; Z=y*st+Z*ct; return [cx+X*R, cy-Y*R, Z]; }; const seen=new Set();
+  for(const p of pts){ const [x,y,z]=proj(p[0],p[1],p[2]); const gx=Math.round(x/cell)*cell, gy=Math.round(y/cell)*cell, k=gx*9999+gy; if(seen.has(k)) continue; seen.add(k); const d=(z+1)/2; ctx.fillStyle=INK; ctx.globalAlpha=.12+d*.7; const s=Math.max(1,(cell-1)*(.45+d*.55)); ctx.fillRect(gx-s/2,gy-s/2,s,s); }
+  ctx.globalAlpha=1; for(let i=0;i<64;i++){ const q=i/64*Math.PI*2; const [x,y,z]=proj(Math.cos(q),0,Math.sin(q)); if(z<-.2) continue; ctx.fillStyle=DIM; ctx.fillRect(Math.round(x/cell)*cell-1,Math.round(y/cell)*cell-1,2,2); }
+  ctx.fillStyle=FAINT; for(let i=-10;i<=10;i++){ const [x,y]=proj(0,i/10*1.15,0); ctx.fillRect(x-1,y-1,2,2); }
+  const th=.9+.75*Math.sin(t*.0006), ph=t*.0011; const v=[Math.sin(th)*Math.cos(ph),Math.cos(th),Math.sin(th)*Math.sin(ph)];
+  ctx.fillStyle=ACC; for(let i=0;i<=22;i++){ const f=i/22; const [x,y]=proj(v[0]*f,v[1]*f,v[2]*f); ctx.fillRect(Math.round(x/cell)*cell-cell/2,Math.round(y/cell)*cell-cell/2,cell-1,cell-1); }
+  const [hx,hy]=proj(v[0],v[1],v[2]); ctx.fillRect(Math.round(hx/cell)*cell-cell,Math.round(hy/cell)*cell-cell,cell*2-1,cell*2-1);
+  $('theta').textContent=th.toFixed(2); $('phi').textContent=(ph%(Math.PI*2)).toFixed(2); $('p1').textContent=Math.pow(Math.sin(th/2),2).toFixed(3); });
+const km=$('keymini'); let K=fit(km,90), kmT=-1e9;
+visLoop(km,t=>{ if(t-kmT<70&&!reduce) return; kmT=t; const {ctx,w,h}=K, c=5, cols=Math.floor(w/c), rows=Math.floor(h/c); ctx.clearRect(0,0,w,h); const scan=Math.floor((t/40)%cols);
+  for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){ const r=Math.abs(Math.sin(x*12.9898+y*78.233+Math.floor(t/600))*43758.5453%1); if(x===scan){ ctx.fillStyle=ACC; ctx.fillRect(x*c,y*c,c-1,c-1); continue; } if(x<scan&&r>.55){ ctx.fillStyle=INK; ctx.globalAlpha=.55; ctx.fillRect(x*c,y*c,c-1,c-1); ctx.globalAlpha=1; } else if(r>.92){ ctx.fillStyle=FAINT; ctx.fillRect(x*c,y*c,c-1,c-1); } } });
+const regEl=$('reg'), bits=[]; for(let i=0;i<128;i++){ const e=document.createElement('i'); if(Math.random()>.5) e.className='b'; regEl.appendChild(e); bits.push(e); }
+if(!reduce) setInterval(()=>{ for(let k=0;k<9;k++){ const e=bits[Math.random()*128|0]; e.className=Math.random()>.93?'a':(Math.random()>.5?'b':''); } },140);
+const hexEl=$('hex'), ops=['QFT','MODEXP','H⊗n','CNOT','MEAS','PHASE','ECADD','INV'], h8=()=>Array.from({length:8},()=>'0123456789abcdef'[Math.random()*16|0]).join('');
+let lines=Array(6).fill(''); function hexStep(){ lines.shift(); lines.push('0x'+h8()+' → <em>'+ops[Math.random()*ops.length|0].padEnd(6)+'</em> r'+(Math.random()*99|0)); hexEl.innerHTML=lines.join('\n'); }
+for(let i=0;i<6;i++) hexStep(); if(!reduce) setInterval(hexStep,320);
+const wv=$('wave'); let W=fit(wv,84);
+visLoop(wv,t=>{ const {ctx,w,h}=W; ctx.clearRect(0,0,w,h); const step=6, n=Math.floor(w/step), mid=h/2; for(let i=0;i<n;i++){ const x=i*step+16; if(x>w-16) break; const v=Math.sin(i*.21+t*.002)*.5+Math.sin(i*.067-t*.0013)*.35+Math.sin(i*1.3+t*.004)*.15; const amp=Math.abs(v)*mid*.9+2; ctx.fillStyle=INK; ctx.globalAlpha=.85; ctx.fillRect(x,mid-amp,1,amp*2); if(i%7===0){ ctx.globalAlpha=1; ctx.fillRect(x-1,mid-amp-3,3,3); } } ctx.globalAlpha=1; });
+const bc=$('barcode'); for(let i=0;i<46;i++){ const e=document.createElement('i'); e.style.width=(1+(Math.random()*3|0))+'px'; if(Math.random()>.82) e.style.background='transparent'; bc.appendChild(e); }
+addEventListener('resize',()=>{ S=fit(sph); K=fit(km,90); W=fit(wv,84); });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+{
+  "network": "Ethereum Mainnet",
+  "chainId": 1,
+  "completedAt": "2026-10-10T14:25:52.282Z",
+  "audited": false,
+  "explorerSourceVerified": false,
+  "runtimeBytecodeMatchedLocalArtifacts": true,
+  "contractBindingsChecked": true,
+  "confirmedTransactions": 22,
+  "totalGasUsed": "7279848",
+  "gasPriceWei": "134408580",
+  "actualGasCostWei": "978474032295840",
+  "actualGasCostEth": "0.00097847403229584",
+  "approvedGasBudgetEth": "0.003",
+  "firstBlock": 26162595,
+  "lastBlock": 26162618,
+  "rungs": 12,
+  "markets": 3,
+  "contracts": {
+    "QairosOracle": {
+      "address": "0x3039E2c775d37225f6DaAcaaD858A88d6ABBD9D2",
+      "creationTransaction": "0x8b6dfcbb3e5f564ed1e3d6fba877fc96b35926d3bd93d51679072e325064a13b"
+    },
+    "QairosCanary": {
+      "address": "0xd16f9099888AA56b328c91B90ca5FeA0531c4B9f",
+      "creationTransaction": "0x59565e4bf117edcf0fb1c21d722f20e15ac6dcdd5f73fd2ed96af6cfd5ddb3f7"
+    },
+    "QairosArk": {
+      "address": "0x41D5FF38ca6a8d185D05306d836D5BE986Ee47d7",
+      "creationTransaction": "0x0b1b1e70276a6a2e01acbf0afd9d226acd5a93f1057eeec980a5d3e616a40fcc"
+    },
+    "QairosVault": {
+      "address": "0xd207cF263bF288aDd199ca6777b413A68494961a",
+      "creationTransaction": "0x3e9b82a3cd2bb699c5c5a56937a7805c3add7c3b790590a799206dc5211f564a"
+    },
+    "QairosMarket": {
+      "address": "0xeD77cA63F7eCB92F6569d4b6c6F9A8a9CEe139E5",
+      "creationTransaction": "0x44aeada9471207a5231b7bfa94a1f6298f2b25e1780fac7af6e7e911bafc88b7"
+    },
+    "QairosInsurance": {
+      "address": "0x2D90C8ADB951f3f9286ac239ff7e3d641d057902",
+      "creationTransaction": "0x8d1e6b3bf97aa78ece833b77149be09f47d182cdf29c14b886207bb34741eaf4"
+    }
+  },
+  "warning": "Deployment and bytecode checks are not a security audit. Do not deposit real value before an independent audit.",
+  "sourceVerification": {
+    "provider": "Sourcify",
+    "contracts": {
+      "QairosOracle": {
+        "address": "0x3039E2c775d37225f6DaAcaaD858A88d6ABBD9D2",
+        "runtimeMatch": "exact_match",
+        "creationMatch": "exact_match",
+        "url": "https://repo.sourcify.dev/1/0x3039E2c775d37225f6DaAcaaD858A88d6ABBD9D2",
+        "verifiedAtUtc": "2026-10-10T14:48:21.793Z"
+      },
+      "QairosCanary": {
+        "address": "0xd16f9099888AA56b328c91B90ca5FeA0531c4B9f",
+        "runtimeMatch": "exact_match",
+        "creationMatch": "exact_match",
+        "url": "https://repo.sourcify.dev/1/0xd16f9099888AA56b328c91B90ca5FeA0531c4B9f",
+        "verifiedAtUtc": "2026-10-10T14:48:30.700Z",
+        "externalVerifications": {
+          "etherscan": {
+            "error": "Daily limit of 500 source code submissions reached"
+          },
+          "routescan": {
+            "verificationId": "09bc0f5d-a377-566a-bd44-6c19f10ff3a0",
+            "statusUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=checkverifystatus&chainid=1&guid=09bc0f5d-a377-566a-bd44-6c19f10ff3a0",
+            "explorerUrl": "https://routescan.io/address/0xd16f9099888AA56b328c91B90ca5FeA0531c4B9f?chainid=1",
+            "contractApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=getabi&chainid=1&address=0xd16f9099888AA56b328c91B90ca5FeA0531c4B9f"
+          },
+          "blockscout": {
+            "verificationId": "d16f9099888aa56b328c91b90ca5fea0531c4b9f6aca5038",
+            "statusUrl": "https://eth.blockscout.com/api?module=contract&action=checkverifystatus&chainid=1&guid=d16f9099888aa56b328c91b90ca5fea0531c4b9f6aca5038",
+            "explorerUrl": "https://eth.blockscout.com//address/0xd16f9099888AA56b328c91B90ca5FeA0531c4B9f",
+            "contractApiUrl": "https://eth.blockscout.com/api?module=contract&action=getabi&chainid=1&address=0xd16f9099888AA56b328c91B90ca5FeA0531c4B9f"
+          }
+        }
+      },
+      "QairosArk": {
+        "address": "0x41D5FF38ca6a8d185D05306d836D5BE986Ee47d7",
+        "runtimeMatch": "exact_match",
+        "creationMatch": "exact_match",
+        "url": "https://repo.sourcify.dev/1/0x41D5FF38ca6a8d185D05306d836D5BE986Ee47d7",
+        "verifiedAtUtc": "2026-10-10T14:48:39.616Z",
+        "externalVerifications": {
+          "etherscan": {
+            "error": "Daily limit of 500 source code submissions reached"
+          },
+          "routescan": {
+            "verificationId": "2912a843-0f10-56e8-8240-cb075d91296b",
+            "statusUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=checkverifystatus&chainid=1&guid=2912a843-0f10-56e8-8240-cb075d91296b",
+            "explorerUrl": "https://routescan.io/address/0x41D5FF38ca6a8d185D05306d836D5BE986Ee47d7?chainid=1",
+            "contractApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=getabi&chainid=1&address=0x41D5FF38ca6a8d185D05306d836D5BE986Ee47d7"
+          },
+          "blockscout": {
+            "verificationId": "41d5ff38ca6a8d185d05306d836d5be986ee47d76aca5040",
+            "statusUrl": "https://eth.blockscout.com/api?module=contract&action=checkverifystatus&chainid=1&guid=41d5ff38ca6a8d185d05306d836d5be986ee47d76aca5040",
+            "explorerUrl": "https://eth.blockscout.com//address/0x41D5FF38ca6a8d185D05306d836D5BE986Ee47d7",
+            "contractApiUrl": "https://eth.blockscout.com/api?module=contract&action=getabi&chainid=1&address=0x41D5FF38ca6a8d185D05306d836D5BE986Ee47d7"
+          }
+        }
+      },
+      "QairosVault": {
+        "address": "0xd207cF263bF288aDd199ca6777b413A68494961a",
+        "runtimeMatch": "exact_match",
+        "creationMatch": "exact_match",
+        "url": "https://repo.sourcify.dev/1/0xd207cF263bF288aDd199ca6777b413A68494961a",
+        "verifiedAtUtc": "2026-10-10T14:48:47.443Z",
+        "externalVerifications": {
+          "etherscan": {
+            "error": "Daily limit of 500 source code submissions reached"
+          },
+          "routescan": {
+            "verificationId": "1e88b7ac-ea60-5c89-bced-d4e8b8eaa8a3",
+            "statusUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=checkverifystatus&chainid=1&guid=1e88b7ac-ea60-5c89-bced-d4e8b8eaa8a3",
+            "explorerUrl": "https://routescan.io/address/0xd207cF263bF288aDd199ca6777b413A68494961a?chainid=1",
+            "contractApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=getabi&chainid=1&address=0xd207cF263bF288aDd199ca6777b413A68494961a"
+          },
+          "blockscout": {
+            "verificationId": "d207cf263bf288add199ca6777b413a68494961a6aca5049",
+            "statusUrl": "https://eth.blockscout.com/api?module=contract&action=checkverifystatus&chainid=1&guid=d207cf263bf288add199ca6777b413a68494961a6aca5049",
+            "explorerUrl": "https://eth.blockscout.com//address/0xd207cF263bF288aDd199ca6777b413A68494961a",
+            "contractApiUrl": "https://eth.blockscout.com/api?module=contract&action=getabi&chainid=1&address=0xd207cF263bF288aDd199ca6777b413A68494961a"
+          }
+        }
+      },
+      "QairosMarket": {
+        "address": "0xeD77cA63F7eCB92F6569d4b6c6F9A8a9CEe139E5",
+        "runtimeMatch": "exact_match",
+        "creationMatch": "exact_match",
+        "url": "https://repo.sourcify.dev/1/0xeD77cA63F7eCB92F6569d4b6c6F9A8a9CEe139E5",
+        "verifiedAtUtc": "2026-10-10T14:48:55.222Z",
+        "externalVerifications": {
+          "etherscan": {
+            "error": "Daily limit of 500 source code submissions reached"
+          },
+          "routescan": {
+            "verificationId": "38615377-c64f-51ef-b6ce-303394db3fde",
+            "statusUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=checkverifystatus&chainid=1&guid=38615377-c64f-51ef-b6ce-303394db3fde",
+            "explorerUrl": "https://routescan.io/address/0xeD77cA63F7eCB92F6569d4b6c6F9A8a9CEe139E5?chainid=1",
+            "contractApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=getabi&chainid=1&address=0xeD77cA63F7eCB92F6569d4b6c6F9A8a9CEe139E5"
+          },
+          "blockscout": {
+            "verificationId": "ed77ca63f7ecb92f6569d4b6c6f9a8a9cee139e56aca5052",
+            "statusUrl": "https://eth.blockscout.com/api?module=contract&action=checkverifystatus&chainid=1&guid=ed77ca63f7ecb92f6569d4b6c6f9a8a9cee139e56aca5052",
+            "explorerUrl": "https://eth.blockscout.com//address/0xeD77cA63F7eCB92F6569d4b6c6F9A8a9CEe139E5",
+            "contractApiUrl": "https://eth.blockscout.com/api?module=contract&action=getabi&chainid=1&address=0xeD77cA63F7eCB92F6569d4b6c6F9A8a9CEe139E5"
+          }
+        }
+      },
+      "QairosInsurance": {
+        "address": "0x2D90C8ADB951f3f9286ac239ff7e3d641d057902",
+        "runtimeMatch": "exact_match",
+        "creationMatch": "exact_match",
+        "url": "https://repo.sourcify.dev/1/0x2D90C8ADB951f3f9286ac239ff7e3d641d057902",
+        "verifiedAtUtc": "2026-10-10T14:49:01.913Z",
+        "externalVerifications": {
+          "etherscan": {
+            "error": "Daily limit of 500 source code submissions reached"
+          },
+          "routescan": {
+            "verificationId": "28229199-380f-577f-b015-f2dd6a979a15",
+            "statusUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=checkverifystatus&chainid=1&guid=28229199-380f-577f-b015-f2dd6a979a15",
+            "explorerUrl": "https://routescan.io/address/0x2D90C8ADB951f3f9286ac239ff7e3d641d057902?chainid=1",
+            "contractApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/1/etherscan/api?module=contract&action=getabi&chainid=1&address=0x2D90C8ADB951f3f9286ac239ff7e3d641d057902"
+          },
+          "blockscout": {
+            "error": "Explorer verification request failed (429): {\"message\":\"Too many requests. Increase limits now at https://dev.blockscout.com\",\"result\":null,\"status\":\"0\"}"
+          }
+        }
+      }
+    }
+  },
+  "sourcifySourceVerified": true
+}
